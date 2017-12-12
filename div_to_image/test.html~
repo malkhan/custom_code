@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>hello test</title>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	
+	<!-- this script helps us to capture any div --> 
+	<script src="html2canvas.js"></script>
+         <script type="text/javascript">	
+		$(function(){	
+                    $('#capture').click(function(){
+				//get the div content
+				div_content = document.querySelector("#facebbokarea")
+				//make it as html5 canvas
+				html2canvas(div_content).then(function(canvas) {
+					//change the canvas to jpeg image
+					data = canvas.toDataURL('image/jpeg');
+					
+					//then call a super hero php to save the image
+					save_img(data);
+				});
+			});	
+                    
+                });
+                //to save the canvas image
+		function save_img(data){
+			//ajax method.
+			$.post('save_jpg.php', {data: data}, function(res){
+				//if the file saved properly, trigger a popup to the user.
+				if(res != ''){
+					yes = confirm('File saved in output folder, click ok to see it!');
+					if(yes){
+                                            var path = 'http://localhost/test/div_to_image/output/';
+                                            $("#output").html('<img src="'+path+res+'.jpg">');
+                //location.href =document.URL+'output/'+res+'.jpg';
+					}
+				}
+				else{
+					alert('something wrong');
+				}
+			});
+		}
+        </script>
+    </head>
+    <body>
+        <input type="button" value="Capture" id="capture" />
+        <div id="facebbokarea" style="background-color: red; width: 50%">
+            <table class="table table-hover table-inverse">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+        <div id="output"></div>
+    </body>
+</html>
