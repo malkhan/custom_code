@@ -1,0 +1,33 @@
+
+1. php artisan make:controller Admin/CrmAttributesController
+2. php artisan make:controller --resource Admin/CrmAttributesController
+3. php artisan make:request Admin/StoreCrmMachinesRequest
+4. php artisan make:request Admin/UpdateCrmMachinesRequest
+	Add Resource route in web.php routes files
+	Route::resource('crm_machines', 'Admin\CrmMachinesController'); 
+5. php artisan route:list
+
+6. php artisan make:migration add_crm_machines
+	//Add tables defination in created migration files.
+
+7. php artisan migrate
+
+	If anything wrong with migrate command then call below 
+	php artisan migrate:rollback
+	
+	If you run rollback then call again 
+	php artisan migrate
+
+8. artisan make:seeder CrmMachinesTableSeeder
+
+9. php artisan db:seed --class=CrmMachinesTableSeeder
+
+
+
+
+
+
+Closer function in route
+Route::get("sayhello",function(){
+	return view('welcome);
+	});
